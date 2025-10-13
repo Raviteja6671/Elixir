@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="https://tse3.mm.bing.net/th/id/OIP.9ieAPkXL82RBhaH4RVaWyQHaHa?pid=Api&P=0&h=180">
+  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <title>Login With Elixir</title>
+  <style>
+  
+    body {
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://images.businessnewsdaily.com/app/uploads/2022/04/04074404/GettyImages-1133767597.jpg') center center / cover no-repeat;
+      height: 100vh;
+    }
+    .overlay {
+      background: rgba(55, 66, 78, 0.44);
+      position: fixed;
+      inset: 0; z-index: 1;
+    }
+    .login-box {
+      position: relative;
+      z-index: 2;
+      max-width: 380px;
+      margin: 100px auto;
+      background: #fff;
+      border-radius: 13px;
+      padding: 36px 38px 24px 38px;
+      box-shadow: 0 6px 32px rgba(32,58,117,0.18);
+      text-align: center;
+    }
+    .login-box h2 { margin-bottom: 30px }
+    .form-field {
+      width: 100%;
+      padding: 12px 10px;
+      margin-top: 12px;
+      margin-bottom: 18px;
+      border-radius: 4px;
+      border: 1px solid #c5c9d1;
+      font-size: 1rem;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      background: #22304a;
+      color: #fff; font-weight: bold;
+      border: none; border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+    .success-msg {
+      color: green;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .remember-label {
+      font-size: .93rem;
+      float: left;
+      margin-top: 7px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="login-box">
+    <!-- <img src="elixir-logo.png" alt="Elixir" height="36" style="margin-bottom:22px" /> -->
+    <h2>LOGIN WITH ELIXIR</h2>
+    <form id="login-form">
+      <input class="form-field" type="text" id="username" placeholder="Email or username" required />
+      <input class="form-field" type="password" id="password" placeholder="Password" required />
+      <label class="remember-label">
+        <input type="checkbox" id="remember" /> Remember Me
+      </label>
+      <button class="login-btn" type="submit">Login</button>
+      <div id="success-message" class="success-msg" style="display:none;">Login successful!</div>
+    </form>
+  </div>
+  <script>
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      document.getElementById('success-message').style.display = 'block';
+      // Backend API call to store data
+      const payload = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        remember: document.getElementById('remember').checked
+      };
+      await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      // Optionally reset form or do a redirect after
+    };
+  </script>
+</body>
+</html>

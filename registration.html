@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel="icon" type="image/png" href="https://tse3.mm.bing.net/th/id/OIP.9ieAPkXL82RBhaH4RVaWyQHaHa?pid=Api&P=0&h=180">
+  <meta charset="UTF-8" />
+  <title>Create Elixir Account</title>
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://tse2.mm.bing.net/th/id/OIP.ZyTuwVD60MWe8S5ABijOoQHaE8?pid=Api&P=0&h=180') center center / cover no-repeat;
+      height: 100vh;
+    }
+    .overlay {
+      background: rgba(28, 44, 66, 0.57);
+      position: fixed; inset: 0; z-index: 1;
+    }
+    .register-box {
+      position: relative; z-index: 2;
+      max-width: 420px;
+      margin: 90px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 38px 38px 24px 38px;
+      box-shadow: 0 6px 32px rgba(32,58,117,0.13);
+      text-align: center;
+    }
+    .register-box h2 { margin-bottom: 24px }
+    .form-field { width: 100%; padding: 12px 12px; margin: 7px 0 15px 0; border-radius: 4px; border: 1px solid #c5c9d1; font-size: 1rem; }
+    .register-btn { width: 100%; padding: 13px; background: #22304a; color: #fff; font-weight: bold; border: none; border-radius: 5px; font-size: 1.11rem; cursor: pointer; margin-top: 14px; margin-bottom: 14px; }
+    .success-msg { color: green; font-weight: bold; margin-bottom: 12px; }
+    .term-label { font-size: .95rem; float: left; margin-top: 13px; margin-bottom: 22px; }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="register-box">
+    <!-- <img src="elixir-logo.png" alt="Elixir" height="36" style="margin-bottom:22px" /> -->
+    <h2>CREATE YOUR ELIXIR ACCOUNT</h2>
+    <form id="register-form">
+      <div style="display:flex; gap:12px;">
+        <input class="form-field" type="text" id="fname" placeholder="First name" required />
+        <input class="form-field" type="text" id="lname" placeholder="Last name" required />
+      </div>
+      <input class="form-field" type="email" id="email" placeholder="Email Address" required />
+      <input class="form-field" type="password" id="password" placeholder="Password" required />
+      <input class="form-field" type="password" id="cpassword" placeholder="Confirm Password" required />
+      <label class="term-label">
+        <input type="checkbox" id="terms" required /> I agree with the terms & conditions
+      </label>
+      <button class="register-btn" type="submit">Create Account</button>
+      <div id="success-message" class="success-msg" style="display:none;">Registration successful!</div>
+    </form>
+  </div>
+  <script>
+    document.getElementById('register-form').onsubmit = async function(e) {
+      e.preventDefault();
+      if (document.getElementById('password').value !== document.getElementById('cpassword').value) {
+        alert('Passwords do not match!');
+        return;
+      }
+      const payload = {
+        firstName: document.getElementById('fname').value,
+        lastName: document.getElementById('lname').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        agreedToTerms: document.getElementById('terms').checked
+      };
+      await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('success-message').style.display = 'block';
+    };
+  </script>
+</body>
+</html>
